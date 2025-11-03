@@ -3,8 +3,8 @@ import uvicorn
 
 app = FastAPI()
 
-hotels = [{'id': 1, 'title': 'Sochi'},
-          {'id': 2, 'title': 'Dubai'}
+hotels = [{'id': 1, 'title': 'Sochi', 'name': "Сочи Плаза"},
+          {'id': 2, 'title': 'Dubai','name':'Дубай Гранд Отель'}
           ]
 
 
@@ -46,6 +46,7 @@ def add_hotel(hotel_title:str = Body(embed=True)):
     hotels.append({'id' : id, 'title' : hotel})
 
     return {'Status': 'OK'}
+
 
 if __name__ == '__main__':
     uvicorn.run(app="main:app",reload=True, port=8002)
