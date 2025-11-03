@@ -47,6 +47,35 @@ def add_hotel(hotel_title:str = Body(embed=True)):
 
     return {'Status': 'OK'}
 
+@app.put("/hotels/{hotel_id}")
+def put_hotels(
+    hotel_id:int,
+    title:str = Body(description="Отель"),
+    name:str = Body(description="Название Отеля")
+    ):
+
+    global hotels
+    for i,hotel in enumerate(hotels):
+        if hotel_id == hotel['id']:
+            hotels[i] = {'id':hotel_id, 'title': title, 'name': name}
+    return {'Status': 'OK'}
+
+@app.patch("/hotels/{hotel_id}")
+def patch_hotels(
+    hotel_id:int,
+    title:str | None = Body(default=None, description="Отель"),
+    name: str | None = Body(default=None, description="Название Отеля")
+    ):
+
+    global hotels
+
+    for i, hotel in enumerate(hotels):
+        if hotel['id'] == hotel_id:
+            if title: hotels[i]['title'] = title
+            if name: hotels[i]['name'] = name
+
+    return {'Status': 'OK'}
+
 
 if __name__ == '__main__':
     uvicorn.run(app="main:app",reload=True, port=8002)
